@@ -15,7 +15,7 @@ class AutoRouting {
         this.errorMsg = (errorMsg ? errorMsg : '<h1>Error 404: page not found<h1>')
     }
     get(req, res) {
-        console.log(`requested adres: ${decodeURI(req.url)}`)
+        console.log(`requested address: ${decodeURI(req.url)}`)
         var fileEXTEN = req.url.split(".")[req.url.split(".").length - 1]
         let file
         if (this.files) file = this.files.find(file => file.url == req.url)
