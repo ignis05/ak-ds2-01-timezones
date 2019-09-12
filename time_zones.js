@@ -17,10 +17,38 @@ class TimeZoneTimer extends React.Component {
 					alignItems: 'center',
 					justifyContent: 'center',
 					flexDirection: 'column',
+					position: 'relative',
 				}}
 			>
-				<div>{this.props.value}</div>
-				<div>{new Date().getTimezoneOffset()}</div>
+				<div
+					style={{
+						textAlign: 'center',
+						position: 'absolute',
+						top: '10px',
+						width: '45%',
+						fontSize: '18px',
+						color: 'red',
+					}}
+				>
+					{this.props.value}
+				</div>
+				<div
+					style={{
+						fontSize: '48px',
+						color: 'blue',
+						marginTop: '40px',
+					}}
+				>
+					00:00:00
+				</div>
+				<button
+					style={{
+						position: 'absolute',
+						bottom: '20px',
+					}}
+				>
+					SAVE
+				</button>
 			</div>
 		)
 	}
