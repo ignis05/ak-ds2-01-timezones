@@ -6,7 +6,7 @@ class TimeZoneTimer extends React.Component {
 		this.interval = setInterval(this.updateTime.bind(this), 1000)
 	}
 	updateTime(returnValue) {
-		let d = new Date()
+		let d = new Date(Date.now() + this.props.offset * 3600000)
 		let h = '0' + d.getUTCHours()
 		let m = '0' + d.getUTCMinutes()
 		let s = '0' + d.getUTCSeconds()
@@ -56,6 +56,7 @@ class TimeZoneTimer extends React.Component {
 					style={{
 						position: 'absolute',
 						bottom: '20px',
+						cursor: 'pointer',
 					}}
 				>
 					SAVE
@@ -95,7 +96,7 @@ class TimeZonesContainer extends React.Component {
 		fetch('http://localhost:3000/zones.json')
 			.then(res => res.json())
 			.then(data => {
-				console.log(data)
+				console.log('fetched data:', data)
 				this.setState({ timezones: data })
 			})
 	}
