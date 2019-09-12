@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Cw05</title>
+		<script src="./libs/react.development.js"></script>
+		<script src="./libs/react-dom.development.js"></script>
+		<script src="./libs/browser.min.js"></script>
+		<style>
+			.xd > * {
+				float: left;
+				margin: 5px;
+			}
+			.xd {
+				display: flex;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script type="text/babel">
+			class Square extends React.Component {
+				constructor(props) {
+					super(props)
+					this.state = { w: 200, h: 200, c: '#ff0000' }
+					this.clickHandler = this.clickHandler.bind(this)
+				}
+				clickHandler() {
+					this.setState({
+						w: 100 + Math.floor(Math.random() * 300),
+						h: 100 + Math.floor(Math.random() * 300),
+						c: '#' + Math.random().toString(16).substr(-6)
+					})
+				}
+				render() {
+					return (
+						<div
+							style={{
+								width: '200px',
+								border: '2px solid black',
+								background: this.state.c,
+								height: this.state.h,
+								padding: '10px'
+							}}
+						>
+							<div>a = {this.state.w}</div>
+							<div>b = {this.state.h}</div>
+							<div>c = {this.state.c}</div>
+							<button onClick={this.clickHandler}>click</button>
+						</div>
+					)
+				}
+			}
+			ReactDOM.render(
+				<div className="xd">
+					<Square init={5} />
+					<Square init={5} />
+					<Square init={5} />
+				</div>,
+				document.getElementById('root')
+			)
+		</script>
+	</body>
+</html>
