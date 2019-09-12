@@ -38,11 +38,11 @@ class TimeZoneTimer extends React.Component {
 					style={{
 						textAlign: 'center',
 						position: 'absolute',
-						top: '10px',
-						width: '45%',
+						top: '20px',
+						width: '55%',
 						fontSize: '18px',
-						color: '#ffffff',
-						opacity: '0.60',
+						color: '#ffffff99',
+						borderRadius:'80% 80% 0% 0%'
 					}}
 				>
 					{this.props.value}
@@ -51,7 +51,7 @@ class TimeZoneTimer extends React.Component {
 					style={{
 						fontSize: '48px',
 						color: '#ffffff',
-						marginTop: '40px',
+						marginTop: '10px',
 					}}
 				>
 					{this.state.time}
