@@ -10,7 +10,7 @@
 		<script src="./libs/browser.min.js"></script>
 		<style>
 			.xd > * {
-				margin: 0;
+				margin: 5px;
 			}
 			.xd {
 				display: flex;
@@ -20,10 +20,12 @@
 	<body>
 		<div id="root"></div>
 		<script type="text/babel">
-			class Food extends React.Component{
-				render(){
-					return(
-						<div style={{border:'2px solid black'}}>{this.props.food}</div>
+			class Food extends React.Component {
+				render() {
+					return (
+						<div style={{ border: '2px solid black' }}>
+							{this.props.food}
+						</div>
 					)
 				}
 			}
@@ -31,33 +33,43 @@
 				constructor(props) {
 					super(props)
 
-					this.state = { selected: "none" }
+					this.state = { selected: 'none' }
 					this.clickHandler = this.clickHandler.bind(this)
 					this.foodTab = this.props.foodTab
-
 				}
 				clickHandler() {
-					let rand = Math.floor(Math.random() * this.foodTab.length
-					this.setState(
-						{
+					let rand
+					do {
+						rand = Math.floor(Math.random() * this.foodTab.length)
+					} while (this.foodTab[rand] == this.state.selected)
+
+					this.setState({
 						selected: this.foodTab[rand]
-					}
-					)
+					})
 				}
 				render() {
 					return (
-						<div style={{ width: '200px', border: '2px solid black' }}>
-							<button onClick={this.clickHandler}>Wylosuj we wszystkich</button>
+						<div
+							style={{
+								width: '200px',
+								border: '2px solid black',
+								padding: '5px'
+							}}
+						>
+							<button onClick={this.clickHandler}>
+								Wylosuj we wszystkich
+							</button>
 							<div className="xd">
-								<Food food={this.state.selected}/>
+								<Food food={this.state.selected} />
+								<Food food={this.state.selected} />
+								<Food food={this.state.selected} />
 							</div>
 						</div>
 					)
 				}
 			}
 			ReactDOM.render(
-					<Square  foodTab={["masło", "mleko", "chleb", "dżem"]}/>
-				,
+				<Square foodTab={['masło', 'mleko', 'chleb', 'dżem']} />,
 				document.getElementById('root')
 			)
 		</script>
