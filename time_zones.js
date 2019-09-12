@@ -1,7 +1,18 @@
 class TimeZoneTimer extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { time: 0 }
+
+		this.state = { time: this.updateTime(true) }
+		this.interval = setInterval(this.updateTime.bind(this), 1000)
+	}
+	updateTime(returnValue) {
+		let d = new Date()
+		let h = '0' + d.getUTCHours()
+		let m = '0' + d.getUTCMinutes()
+		let s = '0' + d.getUTCSeconds()
+		let t = `${h.slice(-2)}:${m.slice(-2)}:${s.slice(-2)}`
+		if (returnValue) return t
+		this.setState({ time: t })
 	}
 	render() {
 		return (
@@ -39,7 +50,7 @@ class TimeZoneTimer extends React.Component {
 						marginTop: '40px',
 					}}
 				>
-					00:00:00
+					{this.state.time}
 				</div>
 				<button
 					style={{
