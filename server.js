@@ -1,9 +1,8 @@
-var zones = require('./zones.json')
 var http = require('http')
 var AutoRouting = require('./modules/AutoRouting')
-const routing = new AutoRouting(`./time_zones.html`, [
-	{ url: '/selected', path: './selected.html' },
-	{ url: '/zones', path: './zones.json' },
+const routing = new AutoRouting(`./pages/time_zones.html`, [
+	{ url: '/selected', path: './pages/selected.html' },
+	{ url: '/zones', path: './data/zones.json' },
 ])
 
 var server = http.createServer(function(req, res) {

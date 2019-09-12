@@ -4,6 +4,7 @@ class TimeZoneTimer extends React.Component {
 
 		this.state = { time: this.updateTime(true) }
 		this.interval = setInterval(this.updateTime.bind(this), 1000)
+		this.clickHandler = this.clickHandler.bind(this)
 	}
 	updateTime(returnValue) {
 		let d = new Date(Date.now() + this.props.offset * 3600000)
@@ -14,6 +15,7 @@ class TimeZoneTimer extends React.Component {
 		if (returnValue) return t
 		this.setState({ time: t })
 	}
+	clickHandler() {}
 	render() {
 		return (
 			<div
@@ -29,6 +31,7 @@ class TimeZoneTimer extends React.Component {
 					justifyContent: 'center',
 					flexDirection: 'column',
 					position: 'relative',
+					background: '#ffffff13',
 				}}
 			>
 				<div
@@ -38,7 +41,8 @@ class TimeZoneTimer extends React.Component {
 						top: '10px',
 						width: '45%',
 						fontSize: '18px',
-						color: 'red',
+						color: '#ffffff',
+						opacity: '0.60',
 					}}
 				>
 					{this.props.value}
@@ -46,17 +50,23 @@ class TimeZoneTimer extends React.Component {
 				<div
 					style={{
 						fontSize: '48px',
-						color: 'blue',
+						color: '#ffffff',
 						marginTop: '40px',
 					}}
 				>
 					{this.state.time}
 				</div>
 				<button
+					onClick={this.clickHandler}
 					style={{
 						position: 'absolute',
 						bottom: '20px',
 						cursor: 'pointer',
+						background: '#03dac5',
+						color: '#000000',
+						border: '0',
+						padding: '5px',
+						fontSize: '20px',
 					}}
 				>
 					SAVE
@@ -82,6 +92,7 @@ class TimeZonesContainer extends React.Component {
 					justifyContent: 'center',
 					flexDirection: 'row',
 					flexWrap: 'wrap',
+					background: '#121212',
 				}}
 			>
 				{this.state.timezones.length > 0
@@ -93,7 +104,7 @@ class TimeZonesContainer extends React.Component {
 		)
 	}
 	componentDidMount() {
-		fetch('http://localhost:3000/zones.json')
+		fetch('http://localhost:3000/zones')
 			.then(res => res.json())
 			.then(data => {
 				console.log('fetched data:', data)
