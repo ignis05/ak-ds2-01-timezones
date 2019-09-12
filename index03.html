@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Cw03</title>
+		<script src="./libs/react.development.js"></script>
+		<script src="./libs/react-dom.development.js"></script>
+		<script src="./libs/browser.min.js"></script>
+		<style>
+			.xd > * {
+				margin: 0;
+			}
+			.xd {
+				display: flex;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script type="text/babel">
+			class Food extends React.Component{
+				render(){
+					return(
+						<div style={{border:'2px solid black'}}>{this.props.food}</div>
+					)
+				}
+			}
+			class Square extends React.Component {
+				constructor(props) {
+					super(props)
+
+					this.state = { selected: "none" }
+					this.clickHandler = this.clickHandler.bind(this)
+					this.foodTab = this.props.foodTab
+
+				}
+				clickHandler() {
+					let rand = Math.floor(Math.random() * this.foodTab.length
+					this.setState(
+						{
+						selected: this.foodTab[rand]
+					}
+					)
+				}
+				render() {
+					return (
+						<div style={{ width: '200px', border: '2px solid black' }}>
+							<button onClick={this.clickHandler}>Wylosuj we wszystkich</button>
+							<div className="xd">
+								<Food food={this.state.selected}/>
+							</div>
+						</div>
+					)
+				}
+			}
+			ReactDOM.render(
+					<Square  foodTab={["masło", "mleko", "chleb", "dżem"]}/>
+				,
+				document.getElementById('root')
+			)
+		</script>
+	</body>
+</html>
