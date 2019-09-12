@@ -3,7 +3,7 @@ var http = require('http')
 var AutoRouting = require('./modules/AutoRouting')
 const routing = new AutoRouting(`./time_zones.html`, [
 	{ url: '/selected', path: './selected.html' },
-	{ url: '/zones', path: './zones.json' }
+	{ url: '/zones', path: './zones.json' },
 ])
 
 var server = http.createServer(function(req, res) {
