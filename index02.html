@@ -4,16 +4,16 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Cw01</title>
+		<title>Cw02</title>
 		<script src="./libs/react.development.js"></script>
 		<script src="./libs/react-dom.development.js"></script>
 		<script src="./libs/browser.min.js"></script>
 		<style>
-			#root > * > * {
+			.xd > * {
 				float: left;
 				margin: 0;
 			}
-			#root > * {
+			.xd {
 				display: flex;
 			}
 		</style>
@@ -24,23 +24,29 @@
 			class Square extends React.Component {
 				constructor(props) {
 					super(props)
-					this.state = { a: 1, b: 2, c: 3 }
+
+					this.state = { xd: this.props.init }
+					this.clickHandler = this.clickHandler.bind(this)
+				}
+				clickHandler() {
+					this.setState({
+						xd: 'clicked!'
+					})
 				}
 				render() {
 					return (
-						<div style={{ width: '300px', border: '2px solid black' }}>
-							<h1>a = {this.state.a} </h1>
-							<h1>b = {this.state.b} </h1>
-							<h1>c = {this.state.c} </h1>
+						<div style={{ width: '200px', border: '2px solid black' }}>
+							<div>{this.state.xd}</div>
+							<button onClick={this.clickHandler}>click</button>
 						</div>
 					)
 				}
 			}
 			ReactDOM.render(
-				<div>
-					<Square />
-					<Square />
-					<Square />
+				<div className="xd">
+					<Square init="click 1" />
+					<Square init="click 2" />
+					<Square init="click 3" />
 				</div>,
 				document.getElementById('root')
 			)
