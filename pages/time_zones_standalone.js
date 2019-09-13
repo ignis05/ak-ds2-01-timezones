@@ -3,7 +3,7 @@ class TimeZoneTimer extends React.Component {
 		super(props)
 
 		this.state = { time: this.updateTime(true), selected: false }
-		this.interval = setInterval(this.updateTime.bind(this), 1000)
+		this.interval = setInterval(this.updateTime.bind(this), 1)
 		this.clickHandler = this.clickHandler.bind(this)
 	}
 	updateTime(returnValue) {
@@ -90,29 +90,43 @@ class TimeZoneTimer extends React.Component {
 class TimeZonesContainer extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { timezones: [] }
+		this.state = {
+			timezones: [],
+			constTimezones: [],
+			displayingSelected: false,
+		}
 		this.clickHandler = this.clickHandler.bind(this)
 		this.selectTimer = this.selectTimer.bind(this)
 		this.selectedTimers = []
 	}
 	selectTimer(status, data) {
-		// console.log('timer ', data, 'is now set to ', status)
+		console.log('timer ', data, 'is now set to ', status)
 		if (status) {
 			this.selectedTimers.push(data)
 		} else {
-			this.selectedTimers.splice(this.selectedTimers.indexOf(data), 1)
+			this.selectedTimers.splice(
+				this.selectedTimers.findIndex(el => el.value === data.value),
+				1
+			)
 		}
 		console.log(this.selectedTimers)
 	}
 	clickHandler() {
-		console.log('click')
-		this.setState({
-			timezones: this.selectedTimers.map(el => {
-				let x = JSON.parse(JSON.stringify(el))
-				x.disabled = true
-				return x
-			}),
-		})
+		if (this.state.displayingSelected) {
+			this.setState({
+				timezones: this.state.constTimezones,
+				displayingSelected: false,
+			})
+		} else {
+			this.setState({
+				timezones: this.selectedTimers.map(el => {
+					let x = JSON.parse(JSON.stringify(el))
+					x.disabled = true
+					return x
+				}),
+				displayingSelected: true,
+			})
+		}
 	}
 	render() {
 		return (
@@ -155,7 +169,7 @@ class TimeZonesContainer extends React.Component {
 							cursor: 'pointer',
 						}}
 					>
-						Show selected
+						{this.state.displayingSelected ? 'Show all' : 'Show selected'}
 					</button>
 				</div>
 				{this.state.timezones.length > 0
@@ -175,7 +189,7 @@ class TimeZonesContainer extends React.Component {
 			.then(res => res.json())
 			.then(data => {
 				console.log('fetched data:', data)
-				this.setState({ timezones: data })
+				this.setState({ timezones: data, constTimezones: data })
 			})
 	}
 }
