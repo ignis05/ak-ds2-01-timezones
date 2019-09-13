@@ -85,6 +85,10 @@ class TimeZonesContainer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = { timezones: [] }
+		this.clickHandler = this.clickHandler.bind(this)
+	}
+	clickHandler() {
+		console.log(this)
 	}
 	render() {
 		return (
@@ -114,6 +118,7 @@ class TimeZonesContainer extends React.Component {
 				>
 					Select time zones:
 					<button
+						onClick={this.clickHandler}
 						style={{
 							position: 'absolute',
 							right: '10px',
