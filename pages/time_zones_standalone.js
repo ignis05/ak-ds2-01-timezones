@@ -2,7 +2,7 @@ class TimeZoneTimer extends React.Component {
 	constructor(props) {
 		super(props)
 
-		this.state = { time: this.updateTime(true) }
+		this.state = { time: this.updateTime(true), selected: false }
 		this.interval = setInterval(this.updateTime.bind(this), 1000)
 		this.clickHandler = this.clickHandler.bind(this)
 	}
@@ -15,7 +15,11 @@ class TimeZoneTimer extends React.Component {
 		if (returnValue) return t
 		this.setState({ time: t })
 	}
-	clickHandler() {}
+	clickHandler() {
+		this.setState({
+			selected: !this.state.selected,
+		})
+	}
 	render() {
 		return (
 			<div
@@ -30,7 +34,7 @@ class TimeZoneTimer extends React.Component {
 					justifyContent: 'center',
 					flexDirection: 'column',
 					position: 'relative',
-					background: '#ffffff13'
+					background: '#ffffff' + (this.state.selected ? '30' : '13'),
 				}}
 			>
 				<div
@@ -41,7 +45,7 @@ class TimeZoneTimer extends React.Component {
 						width: '55%',
 						fontSize: '18px',
 						color: '#ffffff99',
-						borderRadius: '80% 80% 0% 0%'
+						borderRadius: '80% 80% 0% 0%',
 					}}
 				>
 					{this.props.value}
@@ -50,7 +54,7 @@ class TimeZoneTimer extends React.Component {
 					style={{
 						fontSize: '48px',
 						color: '#ffffff',
-						marginTop: '10px'
+						marginTop: '10px',
 					}}
 				>
 					{this.state.time}
@@ -65,10 +69,11 @@ class TimeZoneTimer extends React.Component {
 						color: '#000000',
 						border: '0',
 						padding: '5px',
-						fontSize: '20px'
+						fontSize: '20px',
+						outline: '0!important',
 					}}
 				>
-					SAVE
+					{this.state.selected ? 'CLEAR' : 'SAVE'}
 				</button>
 			</div>
 		)
@@ -91,7 +96,7 @@ class TimeZonesContainer extends React.Component {
 					justifyContent: 'center',
 					flexDirection: 'row',
 					flexWrap: 'wrap',
-					background: '#121212'
+					background: '#121212',
 				}}
 			>
 				{this.state.timezones.length > 0
@@ -113,7 +118,7 @@ class TimeZonesContainer extends React.Component {
 }
 TimeZonesContainer.defaultProps = {
 	width: '100%',
-	height: '100%'
+	height: '100%',
 }
 
 ReactDOM.render(
