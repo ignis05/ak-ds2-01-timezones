@@ -98,8 +98,37 @@ class TimeZonesContainer extends React.Component {
 					flexDirection: 'row',
 					flexWrap: 'wrap',
 					background: '#121212',
+					paddingTop: '60px',
 				}}
 			>
+				<div
+					style={{
+						width: '100%',
+						textAlign: 'center',
+						fontSize: '48px',
+						position: 'absolute',
+						top: 0,
+						color: 'white',
+						background: '#ffffff28',
+					}}
+				>
+					Select time zones:
+					<button
+						style={{
+							position: 'absolute',
+							right: '10px',
+							top: '10px',
+							border: '0px',
+							color: 'black',
+							background: '#bb86fc',
+							fontSize: '20px',
+							padding: '3px',
+							cursor: 'pointer',
+						}}
+					>
+						Show selected
+					</button>
+				</div>
 				{this.state.timezones.length > 0
 					? this.state.timezones.map((timezone, i) => (
 							<TimeZoneTimer key={i} {...timezone} />
@@ -124,9 +153,6 @@ TimeZonesContainer.defaultProps = {
 
 ReactDOM.render(
 	<div>
-		<div style={{ width: '100%', textAlign: 'center', fontSize: '48px' }}>
-			Select time zones:
-		</div>
 		<TimeZonesContainer dataSource="http://localhost:5500/data/zones.json" />
 	</div>,
 	document.getElementById('root')
