@@ -97,10 +97,10 @@ class TimeZonesContainer extends React.Component {
 			displayingSelected: false,
 		}
 		this.clickHandler = this.clickHandler.bind(this)
-		this.selectTimer = this.selectTimer.bind(this)
+		this.callbackHandler = this.callbackHandler.bind(this)
 		this.selectedTimers = []
 	}
-	selectTimer(status, data) {
+	callbackHandler(status, data) {
 		console.log('timer ', data, 'is now set to ', status)
 		if (status) {
 			this.selectedTimers.push(data)
@@ -181,7 +181,7 @@ class TimeZonesContainer extends React.Component {
 							<TimeZoneTimer
 								key={timezone.value}
 								{...timezone}
-								callback={this.selectTimer}
+								callback={this.callbackHandler}
 							/>
 					  ))
 					: 'error - data file not loaded'}
