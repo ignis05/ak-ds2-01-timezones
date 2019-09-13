@@ -93,29 +93,28 @@ class TimeZonesContainer extends React.Component {
 		super(props)
 		this.state = {
 			timezones: [],
+			constTimezones: [],
+			displayingSelected: true,
 		}
 		this.clickHandler = this.clickHandler.bind(this)
 		this.selectTimer = this.selectTimer.bind(this)
+		this.selectedTimers = []
 	}
-	async selectTimer(status, data) {
+	selectTimer(status, data) {
 		console.log('timer ', data, 'is now set to ', status)
-
-		fetch('http://localhost:3000/updateSelected', {
-			method: 'post',
-			headers: {
-				Accept: 'application/json, text/plain, */*',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ status: status, data: data }),
-		})
-			.then(res => res.json())
-			.then(json => {
-				console.log(json)
-			})
+		if (status) {
+			this.selectedTimers.push(data)
+		} else {
+			this.selectedTimers.splice(
+				this.selectedTimers.findIndex(el => el.value === data.value),
+				1
+			)
+		}
+		console.log(this.selectedTimers)
 	}
 	clickHandler(e) {
 		e.target.blur()
-		window.location = '/selected'
+		window.location = '/'
 	}
 	render() {
 		return (
@@ -143,7 +142,9 @@ class TimeZonesContainer extends React.Component {
 						background: '#ffffff28',
 					}}
 				>
-					Select time zones:
+					{this.state.displayingSelected
+						? 'Selected time zones:'
+						: 'Select time zones:'}
 					<button
 						onClick={this.clickHandler}
 						style={{
@@ -158,7 +159,7 @@ class TimeZonesContainer extends React.Component {
 							cursor: 'pointer',
 						}}
 					>
-						Show selected
+						{this.state.displayingSelected ? 'Show all' : 'Show selected'}
 					</button>
 				</div>
 				{this.state.timezones.length > 0
@@ -174,11 +175,25 @@ class TimeZonesContainer extends React.Component {
 		)
 	}
 	componentDidMount() {
-		fetch(this.props.dataSource)
+		fetch('http://localhost:3000/getSelected', {
+			method: 'post',
+			headers: {
+				Accept: 'application/json, text/plain, */*',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({}),
+		})
 			.then(res => res.json())
-			.then(data => {
-				console.log('fetched data:', data)
-				this.setState({ timezones: data })
+			.then(json => {
+				console.log(json)
+				json.data = json.data.map(el => {
+					let x = JSON.parse(JSON.stringify(el))
+					x.disabled = true
+					return x
+				})
+				this.setState({
+					timezones: json.data,
+				})
 			})
 	}
 }
@@ -189,7 +204,7 @@ TimeZonesContainer.defaultProps = {
 
 ReactDOM.render(
 	<div>
-		<TimeZonesContainer dataSource="http://localhost:3000/zones" />
+		<TimeZonesContainer />
 	</div>,
 	document.getElementById('root')
 )
