@@ -61,24 +61,29 @@ class TimeZoneTimer extends React.Component {
 				>
 					{this.state.time}
 				</div>
-				<button
-					onClick={this.clickHandler}
-					style={{
-						position: 'absolute',
-						bottom: '20px',
-						cursor: 'pointer',
-						background: '#03dac5',
-						color: '#000000',
-						border: '0',
-						padding: '5px',
-						fontSize: '20px',
-						outline: '0!important',
-					}}
-				>
-					{this.state.selected ? 'CLEAR' : 'SAVE'}
-				</button>
+				{!this.props.disabled && (
+					<button
+						onClick={this.clickHandler}
+						style={{
+							position: 'absolute',
+							bottom: '20px',
+							cursor: 'pointer',
+							background: '#03dac5',
+							color: '#000000',
+							border: '0',
+							padding: '5px',
+							fontSize: '20px',
+							outline: '0!important',
+						}}
+					>
+						{this.state.selected ? 'CLEAR' : 'SAVE'}
+					</button>
+				)}
 			</div>
 		)
+	}
+	componentWillUnmount() {
+		clearInterval(this.interval)
 	}
 }
 
@@ -91,7 +96,7 @@ class TimeZonesContainer extends React.Component {
 		this.selectedTimers = []
 	}
 	selectTimer(status, data) {
-		console.log('timer ', data, 'is now set to ', status)
+		// console.log('timer ', data, 'is now set to ', status)
 		if (status) {
 			this.selectedTimers.push(data)
 		} else {
@@ -100,7 +105,14 @@ class TimeZonesContainer extends React.Component {
 		console.log(this.selectedTimers)
 	}
 	clickHandler() {
-		console.log(this)
+		console.log('click')
+		this.setState({
+			timezones: this.selectedTimers.map(el => {
+				let x = JSON.parse(JSON.stringify(el))
+				x.disabled = true
+				return x
+			}),
+		})
 	}
 	render() {
 		return (
@@ -147,9 +159,9 @@ class TimeZonesContainer extends React.Component {
 					</button>
 				</div>
 				{this.state.timezones.length > 0
-					? this.state.timezones.map((timezone, i) => (
+					? this.state.timezones.map(timezone => (
 							<TimeZoneTimer
-								key={i}
+								key={timezone.value}
 								{...timezone}
 								callback={this.selectTimer}
 							/>
