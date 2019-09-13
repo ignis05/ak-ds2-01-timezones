@@ -36,7 +36,8 @@ class TimeZoneTimer extends React.Component {
 					justifyContent: 'center',
 					flexDirection: 'column',
 					position: 'relative',
-					background: '#ffffff' + (this.state.selected ? '30' : '13'),
+					background: '#ffffff' + (this.state.selected ? '30' : '10'),
+					boxShadow: '0px 5px 5px 10px rgba(0,0,0,0.10)',
 				}}
 			>
 				<div
@@ -111,7 +112,8 @@ class TimeZonesContainer extends React.Component {
 		}
 		console.log(this.selectedTimers)
 	}
-	clickHandler() {
+	clickHandler(e) {
+		e.target.blur()
 		if (this.state.displayingSelected) {
 			this.setState({
 				timezones: this.state.constTimezones,
@@ -154,7 +156,9 @@ class TimeZonesContainer extends React.Component {
 						background: '#ffffff28',
 					}}
 				>
-					Select time zones:
+					{this.state.displayingSelected
+						? 'Selected time zones:'
+						: 'Select time zones:'}
 					<button
 						onClick={this.clickHandler}
 						style={{
