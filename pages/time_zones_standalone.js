@@ -15,10 +15,11 @@ class TimeZoneTimer extends React.Component {
 		if (returnValue) return t
 		this.setState({ time: t })
 	}
-	clickHandler() {
+	clickHandler(e) {
 		this.setState({
 			selected: !this.state.selected,
 		})
+		e.target.blur()
 	}
 	render() {
 		return (
