@@ -22,7 +22,6 @@ class TimeZoneTimer extends React.Component {
 				style={{
 					width: '200px',
 					height: '200px',
-					border: '2px solid black',
 					padding: '10px',
 					margin: '10px',
 					borderRadius: '200px',
@@ -31,7 +30,7 @@ class TimeZoneTimer extends React.Component {
 					justifyContent: 'center',
 					flexDirection: 'column',
 					position: 'relative',
-					background: '#ffffff13',
+					background: '#ffffff13'
 				}}
 			>
 				<div
@@ -42,7 +41,7 @@ class TimeZoneTimer extends React.Component {
 						width: '55%',
 						fontSize: '18px',
 						color: '#ffffff99',
-						borderRadius:'80% 80% 0% 0%'
+						borderRadius: '80% 80% 0% 0%'
 					}}
 				>
 					{this.props.value}
@@ -51,7 +50,7 @@ class TimeZoneTimer extends React.Component {
 					style={{
 						fontSize: '48px',
 						color: '#ffffff',
-						marginTop: '10px',
+						marginTop: '10px'
 					}}
 				>
 					{this.state.time}
@@ -66,7 +65,7 @@ class TimeZoneTimer extends React.Component {
 						color: '#000000',
 						border: '0',
 						padding: '5px',
-						fontSize: '20px',
+						fontSize: '20px'
 					}}
 				>
 					SAVE
@@ -92,7 +91,7 @@ class TimeZonesContainer extends React.Component {
 					justifyContent: 'center',
 					flexDirection: 'row',
 					flexWrap: 'wrap',
-					background: '#121212',
+					background: '#121212'
 				}}
 			>
 				{this.state.timezones.length > 0
@@ -104,7 +103,7 @@ class TimeZonesContainer extends React.Component {
 		)
 	}
 	componentDidMount() {
-		fetch('http://localhost:5500/data/zones.json')
+		fetch(this.props.dataSource)
 			.then(res => res.json())
 			.then(data => {
 				console.log('fetched data:', data)
@@ -114,7 +113,7 @@ class TimeZonesContainer extends React.Component {
 }
 TimeZonesContainer.defaultProps = {
 	width: '100%',
-	height: '100%',
+	height: '100%'
 }
 
 ReactDOM.render(
@@ -122,7 +121,7 @@ ReactDOM.render(
 		<div style={{ width: '100%', textAlign: 'center', fontSize: '48px' }}>
 			Select time zones:
 		</div>
-		<TimeZonesContainer />
+		<TimeZonesContainer dataSource="http://localhost:5500/data/zones.json" />
 	</div>,
 	document.getElementById('root')
 )
